@@ -1,4 +1,14 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    Param,
+    Post,
+    Put
+} from '@nestjs/common';
 import { ProductsService } from "../services/products.service";
 import { ProductDto } from "../dto/product.dto";
 
@@ -23,6 +33,11 @@ export class ProductsController {
     @Get(':id')
     @HttpCode(200)
     finOneById(@Param('id') id: string): ProductDto{
+
+        //throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
+
+        //throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Some error
+        // description' })
         return this.productsService.findOneById(id);
     }
 

@@ -1,9 +1,21 @@
-import { Module } from '@nestjs/common';
-import { ProductsController } from './controllers/products.controller';
+import {MiddlewareConsumer, Module, NestModule, RequestMethod} from '@nestjs/common';
+import {ProductsController} from './controllers/products.controller';
 import {ProductsService} from "./services/products.service";
+import {ProductsMiddleware} from "./middleware/products.middleware";
 
 @Module({
   controllers: [ProductsController],
   providers: [ProductsService]
 })
-export class ProductsModule {}
+export class ProductsModule implements NestModule{
+  configure(consumer: MiddlewareConsumer): any {
+    consumer
+        .apply(ProductsMiddleware)
+        .exclude({path: 'products/:id', method: RequestMethod.DELETE})
+        .forRoutes(
+            {path: 'products', method: RequestMethod.GET},
+                  {path: 'products/:id', method: RequestMethod.GET}
+        )
+
+  }
+}
