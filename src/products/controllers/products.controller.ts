@@ -1,16 +1,9 @@
-import {
-    BadRequestException,
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    Param,
-    Post,
-    Put
+import {Body, Controller, Delete, Get, HttpCode,
+    Param, Post, Put,
 } from '@nestjs/common';
 import { ProductsService } from "../services/products.service";
-import { ProductDto } from "../dto/product.dto";
+import {  ProductDto } from "../dto/product.dto";
+import {ValidationProductsPipe} from "../pipes/products.pipe";
 
 @Controller('products')
 export class ProductsController {
@@ -25,7 +18,7 @@ export class ProductsController {
 
     @Post()
     @HttpCode(200)
-    createProduct(@Body() newProduct: ProductDto): any {
+    createProduct(@Body(new ValidationProductsPipe()) newProduct: ProductDto): any {
         this.productsService.createNewProduct(newProduct);
         return {message: "New Product added", new: newProduct}
     }

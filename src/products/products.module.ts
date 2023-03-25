@@ -11,10 +11,10 @@ export class ProductsModule implements NestModule{
   configure(consumer: MiddlewareConsumer): any {
     consumer
         .apply(ProductsMiddleware)
-        .exclude({path: 'products/:id', method: RequestMethod.DELETE})
+        .exclude({path: 'pipes/:id', method: RequestMethod.DELETE})
         .forRoutes(
             {path: 'products', method: RequestMethod.GET},
-                  {path: 'products/:id', method: RequestMethod.GET}
+                  {path: 'pipes/:id', method: RequestMethod.GET}
         )
 
   }
